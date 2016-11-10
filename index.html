@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Formulaire Ajax</title>
+	</head>
+	<body>
+
+		<form>
+			<input required type="text" name="prenom" placeholder="Prénom"><br>
+
+			<textarea required id="message" name="message" cols="50" rows="10" maxlength="140"></textarea>
+  			<p id="compteur">0 caractère(s) restant / 140</p><br>
+
+			<button name="valider" id="valider">Valider</button>
+		</form>
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+		<script>
+			$(document).ready(function(e) {
+			 
+			  	$('#message').keyup(function() {
+			 
+			   	 	var nombreCaractere = $(this).val().length;
+			   	 	var nombreCaractere = 140 - nombreCaractere;
+						 
+			    	var msg = nombreCaractere + ' caractere(s) restant / 140';
+			    	$('#compteur').text(msg);
+			    		
+			 
+			    })
+			 	
+			 	$('#valider').on('click', function(){
+			 		var form = $('form');
+			 		var donnees = form.serialize();
+			 		console.log(donnees);
+
+			 		$.ajax({
+			 			type: 'POST',
+			 			url: 'form.php',
+			 			data: {'app':donnees}
+
+			 		}).done(function(data){
+			 			console.log(data);
+			 		})
+			 	})
+			});
+		</script>
+	</body>
+</html>
